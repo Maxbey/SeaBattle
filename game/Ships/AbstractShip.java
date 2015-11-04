@@ -8,7 +8,7 @@ public class AbstractShip {
 
     protected Cell[] cells;
 
-    AbstractShip(int size, Cell[] cells){
+    public AbstractShip(int size, Cell[] cells){
         this.size = size;
         strength = size;
         bindCells(cells);
@@ -40,5 +40,9 @@ public class AbstractShip {
         for(Cell cell : cells){
             cell.bindShip(this);
         }
+    }
+
+    public Cell[] getCells() {
+        return cells;
     }
 }

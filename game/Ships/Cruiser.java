@@ -2,7 +2,7 @@ package game.Ships;
 import game.Field.Cell;
 
 public class Cruiser extends AbstractShip {
-    Cruiser(Cell[] cells){
+    public Cruiser(Cell[] cells){
         super(ShipsConfig.CRUISER_SIZE, cells);
     }
 }
