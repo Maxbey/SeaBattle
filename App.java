@@ -10,12 +10,13 @@ public class App {
                 MainWindow window = new MainWindow();
                 try {
                     Field playerField = new Field(10 , 10);
-                    //Field enemyField = new Field(10, 10);
+                    Field enemyField = new Field(10, 10);
 
                     window.createPlayerField(playerField);
-                    //window.createEnemyField(enemyField);
+                    window.createEnemyField(enemyField);
 
                     window.renderPlayerField();
+                    window.renderEnemyField();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

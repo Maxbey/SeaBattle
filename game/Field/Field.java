@@ -198,7 +198,7 @@ public class Field {
                             return false;
                     }
 
-                    if (cell.getX() != rowsSize - 1 && getLeftSibling(cell).isShip())
+                    if (cell.getX() != rowsSize - 1 && getRightSibling(cell).isShip())
                         return false;
                 }
             }

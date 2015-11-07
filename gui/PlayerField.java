@@ -1,6 +1,7 @@
 package gui;
 
 import game.Field.*;
+import game.Ships.AbstractShip;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +11,11 @@ public class PlayerField extends JComponent {
     private Field field;
 
     private GraphicalCell[][] cells;
+    private boolean hidden;
 
-    public PlayerField(Field field) {
+    public PlayerField(Field field, boolean hidden) {
         this.field = field;
+        this.hidden = hidden;
 
         createGraphicalCells();
 
@@ -31,7 +34,7 @@ public class PlayerField extends JComponent {
     }
 
     private void renderGamePanel() {
-        char[] letters = {'A', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'Ê'};
+        char[] letters = {'A', 'Ð‘', 'Ð’', 'Ð“', 'Ð”', 'Ð•', 'Ð–', 'Ð—', 'Ð˜', 'Ðš'};
 
         for (int i = 0; i < 10; i++) {
             JLabel hr = new JLabel(String.valueOf(i + 1));
@@ -60,5 +63,16 @@ public class PlayerField extends JComponent {
                 cell.repaint();
             }
         }
+    }
+
+    public void repaintDeadShipCells(AbstractShip ship){
+        for(Cell cell : ship.getCells()){
+            GraphicalCell graphicalCell = cells[cell.getX()][cell.getY()];
+            graphicalCell.repaint();
+        }
+    }
+
+    public boolean isHidden(){
+        return hidden;
     }
 }

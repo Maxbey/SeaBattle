@@ -11,14 +11,12 @@ public class GraphicalCell extends Component implements MouseListener {
     private Cell cell;
 
     boolean selected;
-    boolean attacked;
 
     public GraphicalCell(PlayerField field, Cell cell) {
         this.field = field;
         this.cell = cell;
 
         selected = false;
-        attacked = false;
 
         this.field.add(this);
 
@@ -37,26 +35,29 @@ public class GraphicalCell extends Component implements MouseListener {
     public void paint(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D) graphics;
         renderCell(graphics2D, Color.black);
-            if(cell.isShip()) {
-                AbstractShip ship = cell.getShip();
+        if (cell.isShip()) {
+            AbstractShip ship = cell.getShip();
 
-                if(!ship.isAlive())
-                    renderCell(graphics2D, Color.black);
-                else if(attacked)
-                    renderCell(graphics2D, Color.red);
+            if (!ship.isAlive())
+                renderCell(graphics2D, Color.black);
+            else if (cell.isAttacked())
+                renderCell(graphics2D, Color.red);
+            else{
+                if(field.isHidden())
+                    renderCell(graphics2D, Color.lightGray);
                 else
                     renderCell(graphics2D, Color.orange);
-
-            }
-            else{
-
-                if(attacked)
-                    renderCell(graphics2D, Color.blue);
-                else
-                    renderCell(graphics2D, Color.lightGray);
             }
 
-        if(selected){
+        } else {
+
+            if (cell.isAttacked())
+                renderCell(graphics2D, Color.blue);
+            else
+                renderCell(graphics2D, Color.lightGray);
+        }
+
+        if (selected) {
             renderCell(graphics2D, Color.green);
         }
     }
@@ -73,25 +74,37 @@ public class GraphicalCell extends Component implements MouseListener {
     }
 
     public void mouseEntered(MouseEvent e) {
-        if(!attacked){
+        if(field.isHidden()){
             selected = true;
             repaint();
         }
 
     }
+
     public void mouseExited(MouseEvent e) {
+        if(field.isHidden()){
             selected = false;
             repaint();
+        }
     }
-    public void mouseClicked(MouseEvent e){
-        if(!attacked){
-            if(cell.isShip()){
+
+    public void mouseClicked(MouseEvent e) {
+        if(!cell.isAttacked() && field.isHidden()){
+            cell.setWasAttacked();
+
+            if (cell.isShip()) {
                 cell.getShip().minusStrength();
-                attacked = true;
+                if(!cell.getShip().isAlive()){
+                    field.repaintDeadShipCells(cell.getShip());
+                }
                 repaint();
             }
         }
     }
-    public void mousePressed(MouseEvent e) { }
-    public void mouseReleased(MouseEvent e) { }
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+    }
 }
