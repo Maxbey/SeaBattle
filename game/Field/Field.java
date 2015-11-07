@@ -10,11 +10,14 @@ public class Field {
 
     private Cell[][] field;
 
-    public Field(int r, int c) {
+    public Field(int r, int c) throws Exception {
         field = new Cell[r][c];
 
         rowsSize = r;
         colsSize = c;
+
+        createField();
+        addShips();
     }
 
     public void createField() {
