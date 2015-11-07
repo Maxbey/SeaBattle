@@ -1,6 +1,4 @@
 package gui;
-
-import game.*;
 import game.Field.Field;
 
 import java.awt.event.*;
@@ -10,19 +8,10 @@ public class MainWindow extends JFrame {
     private PlayerField playerField;
     private PlayerField enemyField;
 
-    public MainWindow(){
+    public MainWindow() {
         setTitle("Sea Battle Multiplayer with GUI & Sockets");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(300, 300);
-
-        playerField = new PlayerField(this, true);
-        enemyField = new PlayerField(this, false);
-
-        add(playerField);
-        add(enemyField);
-
-        playerField.setLocation(10, 10);
-        enemyField.setLocation(GuiConfig.FIELD_WIDTH + 20, 10);
+        setSize(500, 500);
 
         setLayout(null);
         setLocationRelativeTo(null);
@@ -30,11 +19,27 @@ public class MainWindow extends JFrame {
         setResizable(false);
     }
 
-    public void renderGameField(Field playerField, Field enemyField){
-        //
+    public void renderPlayerField() {
+        this.playerField.renderField();
     }
 
-    public void renderMenuBar(){
-        //
+    public PlayerField getPlayerField() {
+        return playerField;
+    }
+
+    public PlayerField getEnemyField() {
+        return enemyField;
+    }
+
+    public void createPlayerField(Field field) {
+        playerField = new PlayerField(field);
+        add(playerField);
+        playerField.setLocation(10, 10);
+    }
+
+    public void createEnemyField(Field field) {
+        enemyField = new PlayerField(field);
+        add(enemyField);
+        enemyField.setLocation(GuiConfig.FIELD_WIDTH + 20, 10);
     }
 }

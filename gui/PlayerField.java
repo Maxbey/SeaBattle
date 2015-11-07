@@ -8,18 +8,19 @@ import java.awt.*;
 public class PlayerField extends JComponent {
 
     private Field field;
-    private MainWindow window;
-
-    private boolean gameEnd = false;
-    private boolean isOpen;
 
     private GraphicalCell[][] cells;
-    private GraphicalCell selectedCell;
 
-    public PlayerField(MainWindow window, boolean isOpen) {
-        this.window = window;
-        this.isOpen = isOpen;
+    public PlayerField(Field field) {
+        this.field = field;
 
+        createGraphicalCells();
+
+        setSize(GuiConfig.FIELD_WIDTH, GuiConfig.FIELD_HEIGHT);
+        renderGamePanel();
+    }
+
+    private void createGraphicalCells(){
         cells =  new GraphicalCell[GuiConfig.CELLS_COUNT][GuiConfig.CELLS_COUNT];
 
         for(int i = 0; i < GuiConfig.CELLS_COUNT; i++){
@@ -27,11 +28,6 @@ public class PlayerField extends JComponent {
                 cells[j][i] = new GraphicalCell(this, field.getCell(j , i));
             }
         }
-
-        selectedCell = null;
-
-        setSize(GuiConfig.FIELD_WIDTH, GuiConfig.FIELD_HEIGHT);
-        renderGamePanel();
     }
 
     private void renderGamePanel() {
@@ -58,36 +54,11 @@ public class PlayerField extends JComponent {
         }
     }
 
-    public void render(Graphics graphics) {
-        Graphics2D graphics2D = (Graphics2D) graphics;
-
-    }
-
-    private void paintGameResult(Graphics2D graphics2D) {
-
-    }
-
-    public void setSelectedCell(GraphicalCell selectedCell) {
-        this.selectedCell = selectedCell;
-    }
-
-    public void setGameEnd() {
-        gameEnd = true;
-    }
-
-    public void renderCells() {
-
-    }
-
-    public void renderSelectedCell(Graphics2D graphics2D){
-        //
-    }
-
-    public boolean isOpen(){
-        return isOpen;
-    }
-
-    public void setField(Field field){
-        cells = field.getField();
+    public void renderField() {
+        for(GraphicalCell[] row : cells){
+            for(GraphicalCell cell : row){
+                cell.repaint();
+            }
+        }
     }
 }
