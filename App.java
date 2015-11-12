@@ -1,22 +1,23 @@
 import game.Field.*;
+import game.SeaBattle;
 import gui.*;
+
 import javax.swing.*;
 
 public class App {
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
 
-            public void run() {
-                MainWindow window = new MainWindow();
+            public void run() {;
                 try {
-                    Field playerField = new Field(10 , 10);
-                    Field enemyField = new Field(10, 10);
+                    SeaBattle game = new SeaBattle();
+                    MainWindow window = new MainWindow();
 
-                    window.createPlayerField(playerField);
-                    window.createEnemyField(enemyField);
-
+                    window.setGame(game);
                     window.renderPlayerField();
                     window.renderEnemyField();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

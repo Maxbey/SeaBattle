@@ -13,9 +13,12 @@ public class PlayerField extends JComponent {
     private GraphicalCell[][] cells;
     private boolean hidden;
 
-    public PlayerField(Field field, boolean hidden) {
+    private MainWindow window;
+
+    public PlayerField(Field field, boolean hidden, MainWindow window) {
         this.field = field;
         this.hidden = hidden;
+        this.window = window;
 
         createGraphicalCells();
 
@@ -70,6 +73,10 @@ public class PlayerField extends JComponent {
             GraphicalCell graphicalCell = cells[cell.getX()][cell.getY()];
             graphicalCell.repaint();
         }
+    }
+
+    public MainWindow getWindow() {
+        return window;
     }
 
     public boolean isHidden(){

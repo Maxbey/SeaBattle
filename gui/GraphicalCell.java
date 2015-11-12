@@ -5,6 +5,7 @@ import game.Ships.AbstractShip;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class GraphicalCell extends Component implements MouseListener {
     private PlayerField field;
@@ -89,6 +90,11 @@ public class GraphicalCell extends Component implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
+        try {
+            field.getWindow().getGame().makeShoot(cell.getX(), cell.getY());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
         if(!cell.isAttacked() && field.isHidden()){
             cell.setWasAttacked();
 

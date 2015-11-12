@@ -2,9 +2,10 @@ package game.Field;
 
 import game.Ships.*;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Field {
+public class Field implements Serializable {
     int rowsSize;
     int colsSize;
 
@@ -17,7 +18,6 @@ public class Field {
         colsSize = c;
 
         createField();
-        addShips();
     }
 
     public void createField() {

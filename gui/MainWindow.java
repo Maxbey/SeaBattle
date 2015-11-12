@@ -1,6 +1,7 @@
 package gui;
 
 import game.Field.Field;
+import game.SeaBattle;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,6 +9,8 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
     private PlayerField playerField;
     private PlayerField enemyField;
+
+    private SeaBattle game;
 
     public MainWindow() {
         setTitle("Sea Battle Multiplayer with GUI & Sockets");
@@ -21,30 +24,26 @@ public class MainWindow extends JFrame {
     }
 
     public void renderPlayerField() {
+        playerField = new PlayerField(game.getPlayerField(), false, this);
+        add(playerField);
+        playerField.setLocation(10, 10);
+
         this.playerField.renderField();
     }
 
-    public void renderEnemyField() {
+    public void renderEnemyField() throws Exception {
+        enemyField = new PlayerField(new Field(10, 10), true, this);
+        add(enemyField);
+        enemyField.setLocation(GuiConfig.FIELD_WIDTH + 20, 10);
         this.enemyField.renderField();
     }
 
-    public PlayerField getPlayerField() {
-        return playerField;
+
+    public void setGame(SeaBattle game) {
+        this.game = game;
     }
 
-    public PlayerField getEnemyField() {
-        return enemyField;
-    }
-
-    public void createPlayerField(Field field) {
-        playerField = new PlayerField(field, false);
-        add(playerField);
-        playerField.setLocation(10, 10);
-    }
-
-    public void createEnemyField(Field field) {
-        enemyField = new PlayerField(field, true);
-        add(enemyField);
-        enemyField.setLocation(GuiConfig.FIELD_WIDTH + 20, 10);
+    public SeaBattle getGame(){
+        return game;
     }
 }
