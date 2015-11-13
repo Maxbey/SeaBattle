@@ -1,5 +1,7 @@
 package web;
 
+import game.Field.Point;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -9,8 +11,8 @@ public class ConnectionToClient implements Runnable {
 
     private Thread thread;
 
-    private DataOutputStream socketOutput;
-    private DataInputStream socketInput;
+    private ObjectOutputStream socketOutput;
+    private ObjectInputStream socketInput;
 
     public ConnectionToClient(Socket socket, Server server) throws IOException {
         this.socket = socket;
@@ -19,34 +21,38 @@ public class ConnectionToClient implements Runnable {
         thread = new Thread(this);
         thread.start();
 
-        socketOutput = new DataOutputStream(this.socket.getOutputStream());
-        socketInput = new DataInputStream(this.socket.getInputStream());
+        socketOutput = new ObjectOutputStream(this.socket.getOutputStream());
+        socketInput = new ObjectInputStream(this.socket.getInputStream());
     }
 
     String line = null;
 
-    public void run(){
-        System.out.println("HERE");
-        while(true){
-            try {
-                line = socketInput.readUTF();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void run() {
 
-            System.out.println("From client: " + line);
-            System.out.println("And then am sending it back to all clients...");
-
+        Object object = null;
+        while (true) {
             try {
-                server.sendToAll(line);
-            } catch (IOException e) {
+                object = socketInput.readObject();
+                ConnectionToClient anotherClient = server.getAnotherClient(this);
+
+                send(anotherClient.write(object));
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void write(String string) throws IOException {
-        socketOutput.writeUTF(string);
+    public Object write(Object obj) throws Exception {
+        socketOutput.writeObject(obj);
+        socketOutput.flush();
+
+        return socketInput.readObject();
+    }
+
+    public void send(Object obj) throws Exception {
+        socketOutput.writeObject(obj);
         socketOutput.flush();
     }
+
 }

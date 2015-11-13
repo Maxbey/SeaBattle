@@ -4,12 +4,9 @@ import web.Server;
 
 import java.io.IOException;
 
-public class SeaBattleServer {
-    Server server;
-
+public class SeaBattleServer extends Server {
     public SeaBattleServer(int port) throws Exception {
-        server = new Server(port);
-        server.start();
+        super(port);
     }
 
 

@@ -2,7 +2,9 @@ package game.Field;
 
 import game.Ships.AbstractShip;
 
-public class Cell implements Cloneable{
+import java.io.Serializable;
+
+public class Cell implements Cloneable, Serializable{
     int x;
     int y;
 

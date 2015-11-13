@@ -91,8 +91,8 @@ public class GraphicalCell extends Component implements MouseListener {
 
     public void mouseClicked(MouseEvent e) {
         try {
-            field.getWindow().getGame().makeShoot(cell.getX(), cell.getY());
-        } catch (IOException e1) {
+            Cell answ = field.getWindow().getGame().makeShoot(cell.getX(), cell.getY());
+        } catch (Exception e1) {
             e1.printStackTrace();
         }
         if(!cell.isAttacked() && field.isHidden()){

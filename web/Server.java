@@ -28,9 +28,13 @@ public class Server {
         System.out.println(clientList.size());
     }
 
-    public void sendToAll(String string) throws IOException {
-        for (ConnectionToClient client : clientList) {
-            client.write(string);
+    public ConnectionToClient getAnotherClient(ConnectionToClient client) throws Exception {
+        for(ConnectionToClient connection : clientList){
+            if(connection != client){
+                return connection;
+            }
         }
+
+        throw new Exception("Cannot get another client");
     }
 }

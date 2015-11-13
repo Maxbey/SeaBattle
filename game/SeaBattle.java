@@ -1,6 +1,7 @@
 package game;
 
 import controllers.SeaBattleClient;
+import game.Field.Cell;
 import game.Field.Field;
 import game.Field.Point;
 import gui.MainWindow;
@@ -19,16 +20,18 @@ public class SeaBattle {
     public void makeNewPlayerField() throws Exception {
         playerField = new Field(10, 10);
         playerField.addShips();
+
+        client.setField(playerField);
     }
 
     public void play() {
 
     }
 
-    public void makeShoot(int x, int y) throws IOException {
+    public Cell makeShoot(int x, int y) throws Exception {
         Point point = new Point(x, y);
 
-        client.makeShoot("Shoot to x: " + x + " y: " + y);
+        return client.makeShoot(point);
     }
 
     public Field getPlayerField(){
