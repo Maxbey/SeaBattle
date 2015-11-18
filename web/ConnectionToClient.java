@@ -35,7 +35,7 @@ public class ConnectionToClient implements Runnable {
                 object = socketInput.readObject();
                 ConnectionToClient anotherClient = server.getAnotherClient(this);
 
-                send(anotherClient.write(object));
+                anotherClient.write(object);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -43,14 +43,7 @@ public class ConnectionToClient implements Runnable {
         }
     }
 
-    public Object write(Object obj) throws Exception {
-        socketOutput.writeObject(obj);
-        socketOutput.flush();
-
-        return socketInput.readObject();
-    }
-
-    public void send(Object obj) throws Exception {
+    public void write(Object obj) throws Exception {
         socketOutput.writeObject(obj);
         socketOutput.flush();
     }

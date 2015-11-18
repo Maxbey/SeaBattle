@@ -5,7 +5,7 @@ import game.Ships.*;
 import java.io.Serializable;
 import java.util.Random;
 
-public class Field implements Serializable {
+public class Field {
     int rowsSize;
     int colsSize;
 

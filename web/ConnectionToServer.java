@@ -1,6 +1,7 @@
 package web;
 
 import controllers.SeaBattleClient;
+import game.Field.Cell;
 import game.Field.Point;
 
 import java.io.*;
@@ -25,26 +26,33 @@ public class ConnectionToServer implements Runnable {
         socketOutput = new ObjectOutputStream(this.socket.getOutputStream());
     }
 
-    public Object write(Object obj) throws Exception {
+    public void write(Object obj) throws Exception {
         socketOutput.writeObject(obj);
         socketOutput.flush();
-
-        return socketInput.readObject();
     }
 
-    public void send(Object object) throws Exception {
-        socketOutput.writeObject(object);
-        socketOutput.flush();
-    }
-
-    public void run(){
+    public void run() {
         Object object = null;
 
-        while(true){
+        while (true) {
             try {
                 object = socketInput.readObject();
+                Request request = (Request) object;
 
-                send(client.getCellOnField(object));
+                if(request.getType().equals(RequestConfig.CELL_REQUEST)){
+
+                    Cell cell = (Cell) request.getData();
+                    client.updateEnemyCell(cell);
+                }
+
+                else if(request.getType().equals(RequestConfig.POINT_REQUEST)){
+                    Point point = (Point) request.getData();
+
+                    Object result = client.takeAttack(point);
+                    Request response = new Request(RequestConfig.CELL_REQUEST, result);
+
+                    write(response);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

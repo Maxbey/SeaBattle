@@ -2,7 +2,9 @@ package game.Ships;
 
 import game.Field.Cell;
 
-public class AbstractShip {
+import java.io.Serializable;
+
+public class AbstractShip implements Serializable {
     protected int size;
     protected int strength;
 

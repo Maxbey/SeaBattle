@@ -1,6 +1,7 @@
 package gui;
 
 import game.Field.*;
+import game.Field.Point;
 import game.Ships.AbstractShip;
 
 import javax.swing.*;
@@ -73,6 +74,25 @@ public class PlayerField extends JComponent {
             GraphicalCell graphicalCell = cells[cell.getX()][cell.getY()];
             graphicalCell.repaint();
         }
+    }
+
+    public void repaintCell(int x, int y){
+        GraphicalCell cell = cells[x][y];
+
+        cell.repaint();
+    }
+
+    public void updateCell(Cell cell){
+        GraphicalCell gc = cells[cell.getX()][cell.getY()];
+        cell.setWasAttacked();
+
+        gc.setCell(cell);
+
+        if(cell.isShip() && !cell.getShip().isAlive()){
+            repaintDeadShipCells(cell.getShip());
+        }
+
+        gc.repaint();
     }
 
     public MainWindow getWindow() {

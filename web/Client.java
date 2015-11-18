@@ -14,11 +14,11 @@ public class Client {
 
     }
 
-    public Object sendRequest(Object obj) throws Exception {
-        return server.write(obj);
-    }
-
     public void connect(SeaBattleClient client) throws Exception {
         server = new ConnectionToServer(socket, client);
+    }
+
+    public ConnectionToServer getConnection(){
+        return server;
     }
 }

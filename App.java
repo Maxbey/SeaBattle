@@ -15,6 +15,8 @@ public class App {
                     MainWindow window = new MainWindow();
 
                     window.setGame(game);
+                    game.setWindow(window);
+
                     window.renderPlayerField();
                     window.renderEnemyField();
 

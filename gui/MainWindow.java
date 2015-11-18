@@ -38,6 +38,13 @@ public class MainWindow extends JFrame {
         this.enemyField.renderField();
     }
 
+    public PlayerField getPlayerField() {
+        return playerField;
+    }
+
+    public PlayerField getEnemyField() {
+        return enemyField;
+    }
 
     public void setGame(SeaBattle game) {
         this.game = game;
