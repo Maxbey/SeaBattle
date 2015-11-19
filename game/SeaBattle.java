@@ -34,7 +34,7 @@ public class SeaBattle {
         client.setField(playerField);
     }
 
-    public Cell takeAttack(Point point){
+    public Cell takeAttack(Point point) throws Exception {
         Cell cell = playerField.getCell(point.getX(), point.getY());
         cell.setWasAttacked();
 
@@ -53,7 +53,8 @@ public class SeaBattle {
         window.getPlayerField().repaintCell(point.getX(), point.getY());
 
         if(checkGameEnd()){
-            System.out.println("You Loose");
+            loose();
+            sendWin();
         }
 
         return cell;
@@ -84,5 +85,22 @@ public class SeaBattle {
 
     public boolean checkGameEnd(){
         return playerField.getDeadShipsCellsCnt() == playerField.getShipCellsCnt();
+    }
+
+    public void win(){
+        System.out.println("You win");
+
+        window.getPlayerField().block();
+        window.getEnemyField().block();
+    };
+
+    public void loose(){
+        System.out.println("You loose");
+        window.getPlayerField().block();
+        window.getEnemyField().block();
+    };
+
+    public void sendWin() throws Exception {
+        client.sendWin();
     }
 }

@@ -53,6 +53,10 @@ public class ConnectionToServer implements Runnable {
 
                     write(response);
                 }
+
+                else if(request.getType().equals(RequestConfig.WIN_REQUEST)){
+                    client.setWin();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

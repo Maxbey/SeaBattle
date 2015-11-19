@@ -5,6 +5,7 @@ import game.Field.Field;
 import game.Field.Point;
 import game.SeaBattle;
 import web.Client;
+import web.EmptyRequestData;
 import web.Request;
 import web.RequestConfig;
 
@@ -33,7 +34,7 @@ public class SeaBattleClient extends Client {
         getConnection().write(request);
     }
 
-    public Cell takeAttack(Point point){
+    public Cell takeAttack(Point point) throws Exception{
         return game.takeAttack(point);
     }
 
@@ -43,5 +44,15 @@ public class SeaBattleClient extends Client {
 
     public void updateEnemyCell(Cell cell) throws InterruptedException {
         game.updateEnemyCell(cell);
+    }
+
+    public void sendWin() throws Exception {
+        Request request = new Request(RequestConfig.WIN_REQUEST, new EmptyRequestData());
+
+        getConnection().write(request);
+    }
+
+    public void setWin(){
+        game.win();
     }
 }

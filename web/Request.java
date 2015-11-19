@@ -12,6 +12,12 @@ public class Request implements Serializable {
         this.data = data;
     }
 
+    public Request(String type){
+        this.type = type;
+        data = null;
+    }
+
+
     public String getType() {
         return type;
     }
