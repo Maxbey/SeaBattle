@@ -3,12 +3,16 @@ package game;
 import controllers.SeaBattleClient;
 import game.Field.Cell;
 import game.Field.Field;
+import game.Field.FieldConfig;
 import game.Field.Point;
 import game.Ships.AbstractShip;
+import game.Ships.ShipsConfig;
 import gui.MainWindow;
+import gui.PlayerField;
 import web.Request;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class SeaBattle {
     private Field playerField;
@@ -42,8 +46,15 @@ public class SeaBattle {
                 window.getPlayerField().repaintDeadShipCells(cell.getShip());
             }
         }
+        else{
+            window.getEnemyField().unblock();
+        }
 
         window.getPlayerField().repaintCell(point.getX(), point.getY());
+
+        if(checkGameEnd()){
+            System.out.println("You Loose");
+        }
 
         return cell;
     }
@@ -54,10 +65,6 @@ public class SeaBattle {
         client.attack(point);
     }
 
-    public void play() {
-
-    }
-
     public void setWindow(MainWindow window) {
         this.window = window;
     }
@@ -66,7 +73,16 @@ public class SeaBattle {
         return playerField;
     }
 
-    public void updateEnemyCell(Cell cell){
-        window.getEnemyField().updateCell(cell);
+    public void updateEnemyCell(Cell cell) throws InterruptedException {
+        PlayerField field = window.getEnemyField();
+
+        field.updateCell(cell);
+
+        if(!cell.isShip())
+            field.block();
+    }
+
+    public boolean checkGameEnd(){
+        return playerField.getDeadShipsCellsCnt() == playerField.getShipCellsCnt();
     }
 }

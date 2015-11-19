@@ -90,6 +90,9 @@ public class GraphicalCell extends Component implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent e) {
+        if(field.isBlocked())
+            return;
+
         if(!cell.isAttacked() && field.isHidden()){
             cell.setWasAttacked();
 

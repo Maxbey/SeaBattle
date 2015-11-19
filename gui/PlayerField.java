@@ -16,6 +16,8 @@ public class PlayerField extends JComponent {
 
     private MainWindow window;
 
+    private boolean block;
+
     public PlayerField(Field field, boolean hidden, MainWindow window) {
         this.field = field;
         this.hidden = hidden;
@@ -52,9 +54,9 @@ public class PlayerField extends JComponent {
             hr.setSize(15, GuiConfig.HEADER_ZONE);
             vr.setSize(GuiConfig.HEADER_ZONE, 15);
             hr.setLocation(GuiConfig.HEADER_ZONE + GuiConfig.SPACE_BETWEEN * 2 +
-                    (15 + GuiConfig.SPACE_BETWEEN) * i, GuiConfig.SPACE_BETWEEN);
+                    (3 + GuiConfig.SPACE_BETWEEN) * i, GuiConfig.SPACE_BETWEEN);
             vr.setLocation(GuiConfig.SPACE_BETWEEN, GuiConfig.HEADER_ZONE + GuiConfig.SPACE_BETWEEN * 2 +
-                    (15 + GuiConfig.SPACE_BETWEEN) * i);
+                    (3 + GuiConfig.SPACE_BETWEEN) * i);
 
             add(hr);
             add(vr);
@@ -101,5 +103,17 @@ public class PlayerField extends JComponent {
 
     public boolean isHidden(){
         return hidden;
+    }
+
+    public void block(){
+        block = true;
+    }
+
+    public void unblock(){
+        block = false;
+    }
+
+    public boolean isBlocked(){
+        return block;
     }
 }

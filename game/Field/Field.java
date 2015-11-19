@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class Field {
-    int rowsSize;
-    int colsSize;
+    public int rowsSize;
+    public int colsSize;
+
+    public int shipCells;
 
     private Cell[][] field;
 
@@ -18,7 +20,39 @@ public class Field {
         colsSize = c;
 
         createField();
+        calcShipCells();
     }
+
+    private void calcShipCells(){
+        int battleshipsCells = FieldConfig.BATTLESHIPS_COUNT * ShipsConfig.BATTLESHIP_SIZE;
+        int boutsCells = FieldConfig.BOUTS_COUNT * ShipsConfig.PATROL_SIZE;
+        int cruiserCells = FieldConfig.CRUISER_COUNT * ShipsConfig.CRUISER_SIZE;
+        int destroyerCells = FieldConfig.DESTROYER_COUNT * ShipsConfig.DESTROYER_SIZE;
+
+        shipCells = battleshipsCells + boutsCells + cruiserCells + destroyerCells;
+
+    }
+
+    public int getDeadShipsCellsCnt()
+    {
+        int deadCells = 0;
+
+        for(int i = 0; i < rowsSize; i++){
+            for(int j = 0; j < colsSize; j++){
+                Cell cell = getCell(j, i);
+
+                if(cell.isAttacked() && cell.isShip())
+                    deadCells++;
+            }
+        }
+
+        return deadCells;
+    }
+
+    public int getShipCellsCnt(){
+        return shipCells;
+    }
+
 
     public void createField() {
         for (int i = 0; i < rowsSize; i++) {

@@ -41,7 +41,7 @@ public class SeaBattleClient extends Client {
         this.game = game;
     }
 
-    public void updateEnemyCell(Cell cell){
+    public void updateEnemyCell(Cell cell) throws InterruptedException {
         game.updateEnemyCell(cell);
     }
 }
